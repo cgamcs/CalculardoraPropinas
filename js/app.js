@@ -31,4 +31,16 @@ function guardarCliente() {
 
         return
     }
+
+    /*
+        Asignamos una copia del objeto para que guarde
+        los pedidos aunque aun no lo hagamos y despues
+        guarda la informacion de mesa y hora
+    */
+    cliente = { ...cliente, mesa, hora }
+
+    // Ocultar modal al enviar el formulario (bootstrap)
+    const modalFormulario = document.querySelector('#formulario')
+    const bootstrapModal = bootstrap.Modal.getInstance(modalFormulario)
+    bootstrapModal.hide()
 }
