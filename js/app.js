@@ -298,10 +298,10 @@ function formularioPropinas() {
     const contenido = document.querySelector('#resumen .contenido')
     
     const formulario = document.createElement('DIV')
-    formulario.classList.add('col-md-6', 'formulario')
+    formulario.classList.add('col-md-6')
 
     const divFormulario = document.createElement('DIV')
-    divFormulario.classList.add('card', 'py-2', 'px-3', 'shadow')
+    divFormulario.classList.add('formulario', 'card', 'py-2', 'px-3', 'shadow')
 
     const heading = document.createElement('H3')
     heading.classList.add('my-4', 'text-center')
@@ -367,7 +367,7 @@ function formularioPropinas() {
 
     const radioMasLabel = document.createElement('INPUT')
     radioMasLabel.type = 'number'
-    radioMasLabel.placeholder = '100000%'
+    radioMasLabel.placeholder = '15%'
     radioMasLabel.value = '0'
     radioMasLabel.min = 0
     radioMasLabel.classList.add('form-check-label')
@@ -428,7 +428,59 @@ function calcularPropina() {
     // Calcular el total
     const total = subtotal + propina
 
-    console.log(subtotal, propina, total)
+    mostrarTotalHTML(subtotal, propina, total)
+}
+
+function mostrarTotalHTML(subtotal, propina, total) {
+    const divTotales = document.createElement('DIV')
+    divTotales.classList.add('total-pagar')
+
+    // Subtotal
+    const subtotalParrafo = document.createElement('P')
+    subtotalParrafo.classList.add('fs-4', 'fw-bold', 'mt-4')
+    subtotalParrafo.textContent = 'Subtotal: '
+
+    const subtotalSpan = document.createElement('SPAN')
+    subtotalSpan.classList.add('fw-normal')
+    subtotalSpan.textContent = `$ ${subtotal}`
+
+    subtotalParrafo.appendChild(subtotalSpan)
+
+    // Propina
+    const propinaParrafo = document.createElement('P')
+    propinaParrafo.classList.add('fs-4', 'fw-bold', 'mt-2')
+    propinaParrafo.textContent = 'Propina: '
+
+    const propinaSpan = document.createElement('SPAN')
+    propinaSpan.classList.add('fw-normal')
+    propinaSpan.textContent = `$ ${propina}`
+
+    propinaParrafo.appendChild(propinaSpan)
+
+    // Total
+    const totalParrafo = document.createElement('P')
+    totalParrafo.classList.add('fs-4', 'fw-bold', 'mt-2', 'mb-4')
+    totalParrafo.textContent = 'Total: '
+
+    const totalSpan = document.createElement('SPAN')
+    totalSpan.classList.add('fw-normal')
+    totalSpan.textContent = `$ ${total}`
+
+    totalParrafo.appendChild(totalSpan)
+
+    // Limpiar HTML
+    const divTotalPagar = document.querySelector('.total-pagar')
+
+    if(divTotalPagar) {
+        divTotalPagar.remove()
+    }
+
+    divTotales.appendChild(subtotalParrafo)
+    divTotales.appendChild(propinaParrafo)
+    divTotales.appendChild(totalParrafo)
+
+    const formulario = document.querySelector('.formulario')
+    formulario.appendChild(divTotales)
 }
 
 function limpiarHTML() {
