@@ -362,7 +362,7 @@ function formularioPropinas() {
     const radioMas = document.createElement('INPUT')
     radioMas.type = 'radio'
     radioMas.name = 'propina'
-    radioMas.value = '0'
+    radioMas.value = ''
     radioMas.classList.add('form-check-input')
 
     const radioMasLabel = document.createElement('INPUT')
@@ -371,6 +371,16 @@ function formularioPropinas() {
     radioMasLabel.value = '0'
     radioMasLabel.min = 0
     radioMasLabel.classList.add('form-check-label')
+
+    // Cuando el input de porcentaje personalizado cambie, actualiza el valor del radio
+    radioMasLabel.addEventListener('input', function() {
+        radioMas.value = this.value
+        
+        if (this.value !== '') {
+            radioMas.checked = true
+            calcularPropina()
+        }
+    })
 
     const radioMasDiv = document.createElement('DIV')
     radioMasDiv.classList.add('form-check')
@@ -401,7 +411,24 @@ function formularioPropinas() {
 }
 
 function calcularPropina() {
-    console.log('Desde calcular propina')
+    const { pedido } = cliente
+    let subtotal = 0
+
+    // Calcular subtotal
+    pedido.forEach(articulo => {
+        subtotal += articulo.cantidad * articulo.precio
+    })
+
+    // Seleccionar el radio del Button con la propina del cliente
+    const propinaSeleccionada = document.querySelector('[name="propina"]:checked').value
+
+    // Calcular la propina
+    const propina = ((subtotal * parseInt(propinaSeleccionada)) / 100)
+
+    // Calcular el total
+    const total = subtotal + propina
+
+    console.log(subtotal, propina, total)
 }
 
 function limpiarHTML() {
